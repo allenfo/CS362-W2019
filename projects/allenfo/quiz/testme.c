@@ -2,13 +2,13 @@
 #include<string.h>
 #include<stdlib.h>
 #include<time.h>
-
+/*filled in this function*/
 char inputChar()
 {
     char i = (rand() %94)+32;
     return i;
 }
-
+/*filled in this function*/
 char *inputString()
 {
     char s [6];
