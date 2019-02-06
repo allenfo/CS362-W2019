@@ -17,7 +17,8 @@ unittest3: dominion.o unittest3
 	gcc -o unittest3 -g unittest3.c dominion.o rngs.o $(CFLAGS)
 unittest4: dominion.o unittest4
 	gcc -o unittest4 -g unittest4.c dominion.o rngs.o $(CFLAGS)
-
+cardtest1: dominion.o cardtest1
+	gcc -o cardtest1 -g cardtest1.c dominion.o rngs.o $(CFLAGS)
 testDrawCard: testDrawCard.c dominion.o rngs.o
 	gcc  -o testDrawCard -g  testDrawCard.c dominion.o rngs.o $(CFLAGS)
 
