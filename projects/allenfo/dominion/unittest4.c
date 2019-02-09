@@ -1,6 +1,5 @@
-/*Testing if isGameOver() is correct.
- * should return 1 if game is over and 0 if it is not over.
- * Has two parameters if it is over: All providince cards are gone or three supply cardspiles are empty
+/*Testing if gainCard() is correct.
+ * Player should +1 a card to their hand and deck
  * */
 #include "dominion.h"
 #include <stdio.h>
