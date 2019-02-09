@@ -1,3 +1,4 @@
+/*testing whoseTurn()*/
 #include "dominion.h"
 #include <stdio.h>
 #include "rngs.h"
