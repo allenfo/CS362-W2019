@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "rngs.h"
 #include <stdlib.h>
-
+/*Testing the whoseturn() function*/
 int main ()
 {
 	int numPlayers =2;
@@ -20,9 +20,9 @@ int main ()
 		int j= whoseTurn(&G);
 		if(j==i)
 		{
-			print
 		printf("It is player %d's turn\n",j);
 		endTurn(&G);
+		}
 	}
 	
 }

@@ -61,4 +61,5 @@ int main()
 	testassert(G.discardCount[player],4);
 	testassert(i,-1);
 
+
 }

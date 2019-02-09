@@ -25,20 +25,20 @@ int main ()
            sea_hag, tribute, smithy};
  	int currentPlayer = whoseTurn(&G);
 	int temphand[MAX_HAND];// moved above the if statement
-	int  drawntreasure=0;
+	int  handPos=0;
 	int cardDrawn;
 	int z = 0;// this is the counter for the temp hand
 	initializeGame(numPlayers, k, seed, &G);
 	initializeGame(numPlayers, k, seed, &testG);
 	/*Changes that should happen: Hand +2, discard ++*/
-	printf("Testing the adventurer card\n");
-	adventurerTest(drawntreasure, currentPlayer, &testG,  cardDrawn, temphand, z);
+	printf("Testing smithy\n");
+	smithyTest(cardDrawn, &testG, currentPlayer, handPos);
 	int gainedcards= 2;
-	printf("expected hand count %d, actual was %d\n",G.handCount[currentPlayer]+gainedcards, testG.handCount[currentPlayer]);
+	printf("expected hand count %d, actual was %d\n, Smithy is not considered part of the hand once played from position 0\n",G.handCount[currentPlayer]+gainedcards, testG.handCount[currentPlayer]);
 	test1=testassert(G.handCount[currentPlayer]+gainedcards, testG.handCount[currentPlayer]);
 	printf("Expected total player cards = %d, actual was %d\n",G.discardCount[currentPlayer]+G.deckCount[currentPlayer]+G.handCount[currentPlayer],testG.discardCount[currentPlayer]+testG.deckCount[currentPlayer]+testG.handCount[currentPlayer]);	
 	test2=testassert(G.discardCount[currentPlayer]+G.deckCount[currentPlayer]+G.handCount[currentPlayer],testG.discardCount[currentPlayer]+testG.deckCount[currentPlayer]+testG.handCount[currentPlayer]);
-	if(test1==test2)
+	if(test1==test2&&test1==0)
 	{
 		printf("ALL TESTS PASSED\n");
 	}
