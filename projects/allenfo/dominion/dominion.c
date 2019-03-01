@@ -642,8 +642,8 @@ int getCost(int cardNumber)
 	
   return -1;
 }
-/* Refactoring functions*/
- void adventurerRefactor(int drawntreasure, int currentPlayer, struct gameState *state, int cardDrawn, int temphand[], int z)
+/* test functions for the random tester*/
+ void adventurerTest(int drawntreasure, int currentPlayer, struct gameState *state, int cardDrawn, int temphand[], int z)
 	{	
 	while(drawntreasure<2){
 	if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
@@ -656,8 +656,7 @@ int getCost(int cardNumber)
 	else{
 	  temphand[z]=cardDrawn;
 	  state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
-	//Bug  #1 z does not increase 
-	 // z++;
+	z++;
 	}
       }
       while(z-1>=0){
@@ -665,10 +664,10 @@ int getCost(int cardNumber)
 	z=z-1;
       }
         }
-void smithyRefactor(int cardDrawn, struct gameState *state, int currentPlayer, int handPos)
+void smithyTest(int cardDrawn, struct gameState *state, int currentPlayer, int handPos)
 {
-	//equals sign added. Bug #2
-	 for (int i = 0; i <= 3; i++)
+	
+	 for (int i = 0; i < 3; i++)
 	{
 	  drawCard(currentPlayer, state);
 	}
@@ -676,7 +675,7 @@ void smithyRefactor(int cardDrawn, struct gameState *state, int currentPlayer, i
       //discard card from hand
       discardCard(handPos, currentPlayer, state, 0);
 }	
-void council_roomRefactor(int currentPlayer, struct gameState *state, int handPos)
+void council_roomTest(int currentPlayer, struct gameState *state, int handPos)
 {
 	for (int i = 0; i < 4; i++)
 	{
@@ -781,7 +780,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   switch( card ) 
     {
     case adventurer:
-	adventurerRefactor(drawntreasure, currentPlayer, state,  cardDrawn, temphand, z);
+	adventurerTest(drawntreasure, currentPlayer, state,  cardDrawn, temphand, z);
 	
       /*
  * 	Origional code saved for future use
@@ -807,7 +806,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 			
     case council_room:
       //+4 Cards
- council_roomRefactor(currentPlayer, state, handPos);
+ 	council_roomTest(currentPlayer, state, handPos);
   /*   for (i = 0; i < 4; i++)
 	{
 	  drawCard(currentPlayer, state);
@@ -951,7 +950,7 @@ remodelRefactor(j, state, currentPlayer,  choice1, choice2, choice3, handPos);
 		
     case smithy:
       //+3 Cards
-      smithyRefactor(cardDrawn, state, currentPlayer, handPos);
+      smithyTest(cardDrawn, state, currentPlayer, handPos);
 /*for (i = 0; i < 3; i++)
 	{
 	  drawCard(currentPlayer, state);

@@ -1,0 +1,113 @@
+        -:    0:Source:randomtestcard1.c
+        -:    0:Graph:randomtestcard1.gcno
+        -:    0:Data:randomtestcard1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include <stdio.h>
+        -:    4:#include "rngs.h"
+        -:    5:#include <stdlib.h>
+        -:    6:#include <math.h>
+        -:    7:#include <string.h>
+        -:    8:#include <time.h>
+        -:    9:
+        -:   10:#define DEBUG 0
+        -:   11:#define NOISY_Test 1
+        -:   12:/*I looked at testDrawCard() function and used that as my base for the test*/
+        -:   13:/*This function will test and compare a pre and post gameState*/
+        -:   14:int drawCard_fail;
+        -:   15:int discardCard_fail;
+        -:   16:int hand_fail;
+        -:   17:int deck_fail;
+     3000:   18:int testassert(int a, int b)
+        -:   19:{
+     3000:   20:	if(a==b)
+        -:   21:	{
+     3000:   22:		return 0;//if true
+        -:   23:	}
+        -:   24:	else
+        -:   25:	{
+    #####:   26:		return 1;// if false
+        -:   27:	}
+        -:   28:}
+      500:   29:void smithyRandTest(int p, struct gameState *post)
+        -:   30:{
+        -:   31://	int playerDraws[post->numPlayers]; //max_players is 4
+        -:   32:	int preDraws[3];			//cards get drawn 4 times by the function
+      500:   33:	int bonus=0;
+        -:   34:	struct gameState pre;
+      500:   35:	memcpy (&pre, post, sizeof(struct gameState));
+        -:   36:	/*Holds results for that test*/
+      500:   37:	int r= cardEffect(smithy,0,0,0, post, 0,&bonus);
+        -:   38:	/*draws 4 cards and stores then in an array.*/
+     2000:   39:	for (int i = 0; i < 3; i++)
+        -:   40:	{
+     1500:   41:	  preDraws[i]=drawCard(p, &pre);
+        -:   42:	}
+        -:   43:		
+        -:   44:      //put played card in played card pile
+      500:   45:     int d= discardCard(0, p, &pre, 0);
+        -:   46:
+        -:   47:/*Comparing the results*/
+        -:   48:
+     2000:   49:for(int j=0;j<3;j++)
+        -:   50:{
+     1500:   51:	drawCard_fail=drawCard_fail+ testassert(preDraws[j],0);
+        -:   52:}
+      500:   53:discardCard_fail=discardCard_fail+testassert(d,0);
+      500:   54:deck_fail=deck_fail + testassert(pre.deckCount[p],post->deckCount[p]);
+      500:   55:hand_fail=hand_fail + testassert(pre.handCount[p],post->handCount[p]);
+      500:   56:}
+        -:   57:/*functions used to count the number of failed tests*/
+        -:   58:
+        1:   59:int main ()
+        -:   60:{
+        1:   61:	srand(time(NULL));
+        1:   62:	int testResults=0;
+        -:   63:	/*Players have to be between 2 and 4*/
+        -:   64:	struct gameState G;
+        -:   65:	int deckCount, discardCount, handCount, player;
+        1:   66:	printf("Random testing Smithy card.\n");
+        -:   67:	int k;
+      501:   68:	for(k=0;k<500;k++)
+        -:   69:	{
+ 13150500:   70:		for(int i=0;i< sizeof(struct gameState);i++)
+        -:   71:		{
+ 13150000:   72:			((char*)&G)[i]=floor(Random() *256);
+        -:   73:		}
+      500:   74:		G.numPlayers=(rand() %3)+2;	//between 2 and 4 players
+      500:   75:		G.numBuys=1;
+      500:   76:		player =(rand() %G.numPlayers);
+      500:   77:		deckCount=floor(Random() *MAX_DECK);
+      500:   78:		handCount=floor(Random() *MAX_HAND);
+      500:   79:		discardCount=floor(Random() *MAX_DECK);
+      500:   80:		G.whoseTurn=player;
+      500:   81:		G.playedCardCount = floor(Random() * (MAX_DECK - 1));
+     2010:   82:		for(int j=0;j<G.numPlayers;j++)
+        -:   83:		{
+     1510:   84:			G.deckCount[j]=deckCount;
+     1510:   85:			G.handCount[j]=handCount;
+     1510:   86:			G.discardCount[j]=discardCount;
+        -:   87:		}
+      500:   88:		smithyRandTest(player, &G);
+        -:   89:	}
+        1:   90:	testResults= drawCard_fail + discardCard_fail + hand_fail+  deck_fail;
+        1:   91:	if(testResults==0)
+        -:   92:	{
+        1:   93:		printf("ALL TESTS PASS\n");
+        -:   94:	}
+        -:   95:	else
+        -:   96:	{
+    #####:   97:		printf("SOME TESTS FAILED.\n");
+    #####:   98:		printf("drawCard() failed %d times.\ndiscardCard() failed %d times\nPlayer's hand count didn't match up %d times.\nPlayer's deck count didn't match up %d times.\n",drawCard_fail, discardCard_fail, hand_fail, deck_fail);
+        -:   99:	}
+        1:  100:	return 0;
+        -:  101:}
+        -:  102:
+        -:  103:
+        -:  104:
+        -:  105:
+        -:  106:
+        -:  107:
+        -:  108:
