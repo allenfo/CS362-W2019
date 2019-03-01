@@ -1,5 +1,8 @@
 Forrest Allen onid:allenfo
 
-Assignment 2 submission </br>
+Assignment 4 submission </br>
 
-Bugs are added in dominion.c at lines: 659, 669, 723, and 744
+To run the three random testers type make and one of these three options</br>
+randomtestcard1</br>
+randomtestcard2</br>
+randomtestadventurer</br>
