@@ -1,5 +1,6 @@
 Forrest Allen onid:allenfo
 
-Assignment 2 submission </br>
+Assignment 5 submission </br>
 
-Bugs are added in dominion.c at lines: 659, 669, 723, and 744
+Added my teammates code under the dir volzmDominion </br>
+Comtains my unit and random tests as well as the fixed code. I commented where the bugs were in the dominion.c file.
