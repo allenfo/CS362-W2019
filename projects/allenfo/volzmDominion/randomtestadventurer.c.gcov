@@ -1,0 +1,82 @@
+        -:    0:Source:randomtestadventurer.c
+        -:    0:Graph:randomtestadventurer.gcno
+        -:    0:Data:randomtestadventurer.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include <stdio.h>
+        -:    3:#include "rngs.h"
+        -:    4:#include <stdlib.h>
+        -:    5:#include <math.h>
+     2000:    6:int testassert(int a, int b)
+        -:    7:{
+     2000:    8:	if(a==b)
+        -:    9:	{
+     1926:   10:		return 1;//if true
+        -:   11:	}
+        -:   12:	else
+        -:   13:	{
+       74:   14:		return 0;// if false
+        -:   15:	}
+        -:   16:}
+        1:   17:int main ()
+        -:   18:{
+        1:   19:	srand(time(NULL));
+        1:   20:	int passedTests=0;
+        1:   21:	int failedTests=0;
+        -:   22:	/*Players have to be between 2 and 4*/
+        1:   23:	int numPlayers =(rand() %2)+2;
+        1:   24:	printf("Random testing Adventurer card.\nTest #1: Gaining two cards to players hand.\nTest #2: Making sure total cards do not change.\n");
+        -:   25:	int k;
+     1001:   26:	for(k=0;k<1000;k++)
+        -:   27:	{
+        -:   28:		int test1, test2;
+        -:   29:		struct gameState G;
+     1000:   30: 		int currentPlayer = 0;
+     1000:   31:		int deckSize=(rand() %(MAX_DECK -2)+2);
+     1000:   32:		int handSize=0;
+        -:   33:		/*for the function to work there needs to be at least two cards in the  deck*/
+     1000:   34:		if(deckSize>2)
+        -:   35:		{
+      998:   36:			handSize=(rand() %(deckSize-2));
+        -:   37:		}
+     1000:   38:		deckSize=deckSize-handSize;
+     1000:   39:		G.handCount[currentPlayer]=handSize;
+     1000:   40:		G.deckCount[currentPlayer]=deckSize;
+     1000:   41:		G.discardCount[currentPlayer]=0;
+   131393:   42:		for(int i=0;i<deckSize;i++)
+        -:   43:		{
+   130393:   44:			int randCard=(rand()%7)+12;
+   130393:   45:			G.deck[0][i]=randCard;
+        -:   46:		}
+     1000:   47:		int treasure1=(rand() % deckSize-1);
+     1000:   48:		int treasure2=(rand() % deckSize-1);
+     2036:   49:		while(treasure1 == treasure2)
+        -:   50:		{
+       36:   51:			treasure2=(rand() % deckSize-1);
+        -:   52:		}
+     1000:   53:		G.deck[0][treasure1]=gold;
+     1000:   54:		G.deck[0][treasure2]=silver;
+        -:   55:	
+        -:   56:		int temphand[MAX_HAND];// moved above the if statement
+     1000:   57:		int  drawntreasure=0;
+        -:   58:		int cardDrawn;
+     1000:   59:		int z = 0;// this is the counter for the temp hand
+        -:   60:		/*Changes that should happen: Hand +2, discard ++*/
+     1000:   61:		adventurerFunc(0, currentPlayer, &G, drawntreasure, temphand, z);
+     1000:   62:		int gainedcards= 2;
+        -:   63:		/*Testing if the player gained 2 cards*/
+     1000:   64:		test1=testassert(handSize+gainedcards, G.handCount[currentPlayer]);
+        -:   65:		/*Testing that the player only gained cards from their deck*/
+     1000:   66:		test2=testassert(deckSize+handSize,G.discardCount[currentPlayer]+G.deckCount[currentPlayer]+G.handCount[currentPlayer]);
+     1000:   67:		if(test1==1 &&test2==1)
+        -:   68:		{
+      926:   69:			passedTests++;
+        -:   70:		}
+        -:   71:		else
+        -:   72:		{
+       74:   73:			failedTests++;
+        -:   74:		}
+        -:   75:	}
+        1:   76:printf("The adventurer card passed all tests %d times and failed one ore more tests %d times\n",passedTests, failedTests);
+        -:   77:}
